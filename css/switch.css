@@ -1,0 +1,32 @@
+.switch {
+    height: 32px;
+    width: 64px;
+    border-radius: 16px;
+    background-color: #444;
+    position: relative;
+    appearance: none;
+    outline: none;
+    border: 0.1px solid #555;
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+.switch:checked {
+    background-color: #444;
+}
+.switch::before {
+    left: 0;
+    top: 0;
+    background-image: url('../img/sound.png');
+    overflow: hidden;
+    border-radius: 16px;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    content: '';
+    transition: 0.3s;
+}
+.switch:checked::before {
+    background-position-x: right;
+    left: 32px;
+}
