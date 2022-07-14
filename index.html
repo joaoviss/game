@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Sonic Run'n'Jump</title>
+    <script src="./js/sonic.js"></script>
+    <script src="./js/enemy.js"></script>
+    <link rel="shortcut icon" href="./img/run.gif" type="image/gif">
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        .start-screen {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <audio src="./assets/bgm-green-hill.mp3" id="bgm-green-hill"></audio>
+    <audio src="./assets/sfx-death.wav" id="sfx-death"></audio>
+    <audio src="./assets/sfx-jump.wav" id="sfx-jump"></audio>
+    <audio src="./assets/sfx-kill.wav" id="sfx-kill"></audio>
+    <audio src="./assets/sfx-slide.wav" id="sfx-slide"></audio>
+    <div id="game" class="game">
+        <div id="background" class="background">
+            <div class="bg1">
+                <img src="./img/cloud.png" class="cloud cloud1">
+                <img src="./img/cloud.png" class="cloud cloud2">
+                <img src="./img/cloud.png" class="cloud cloud3">            
+            </div>
+            <div class="bg2">
+            </div>
+        </div>
+        <div id="main" class="main">
+            <div id="stage" class="stage"></div>
+        </div>
+        <div id="foreground" class="foreground">
+            <div id="hud" class="hud off">
+                <input type="checkbox" id="bgm-switch" class="switch">
+                <span class="display">
+                    <img src="./img/life.png">&nbsp;x &nbsp;
+                    <span id="life-counter" class="counter"></span>
+                </span>
+                <span class="display">
+                    <img src="./img/sonic-ring.gif">&nbsp;x &nbsp;
+                    <span id="ring-counter" class="counter"></span>
+                </span>
+            </div>
+            <span id="buttons" class="buttons off">
+                <button id="jump-btn" class="button">Jump</button>
+                <button id="slide-btn" class="button">Slide</button>
+            </span>
+        </div>
+        <div id="start-screen" class="start-screen on">
+            <img src="./img/main-screen.gif" class="logo">
+        </div>
+
+    </div>
+    <!-- <script type="module" src="./js/script.js"></script> -->
+    <script src="./js/script.js"></script>
+</body>
+</html>
