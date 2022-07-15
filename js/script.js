@@ -7,7 +7,8 @@ const sfxSlide = document.querySelector('#sfx-slide');
 const stage = document.querySelector('#stage');
 const foreground = document.querySelector('#foreground');
 const hud = document.querySelector('#hud');
-const startScreen = document.querySelector('#start-screen');
+const introBox = document.querySelector('#intro-box');
+const titleScreen = document.querySelector('#title-screen');
 const bgmSwitch = document.querySelector('#bgm-switch');
 const buttons = document.querySelector('#buttons');
 const jumpBtn = document.querySelector('#jump-btn');
@@ -15,22 +16,31 @@ const slideBtn = document.querySelector('#slide-btn');
 // */
 const sonic = new Sonic();
 const enemies = [
-    new Enemy('../img/sonic-enemy-lobster.gif', -65, 115, 10, 3000),
-    new Enemy('../img/sonic-enemy-dino.gif', 0, 78, 5, 3500),
-    new Enemy('../img/sonic-enemy-bat.gif', -65, 110, 10, 3500),
-    new Enemy('../img/sonic-enemy-crab.gif', 0, 112, 10, 2500),
-    new Enemy('../img/sonic-enemy-bee.gif', -65, 104, 10, 2300),
-    new Enemy('../img/sonic-enemy-motobug.gif', 0, 115, 10, 2500)
+    new Enemy('./img/sonic-enemy-lobster.gif', -65, 115, 10, 3000),
+    new Enemy('./img/sonic-enemy-dino.gif', 0, 78, 5, 3500),
+    new Enemy('./img/sonic-enemy-bat.gif', -65, 110, 10, 3500),
+    new Enemy('./img/sonic-enemy-crab.gif', 0, 112, 10, 2500),
+    new Enemy('./img/sonic-enemy-bee.gif', -65, 104, 10, 2300),
+    new Enemy('./img/sonic-enemy-motobug.gif', 0, 115, 10, 2500)
 ];
 
+const show = (element) => {
+    element.classList.toggle('on');
+    element.classList.toggle('off');
+}
+
 const init = () => {
-    startScreen.addEventListener('click', () => {
-        sonic.intro();
-        [hud, buttons, startScreen].forEach(el => {
-            el.classList.toggle('off');
-            el.classList.toggle('on');
+    bgmControll();
+    titleScreen.addEventListener('click', () => {
+        show(titleScreen);
+        introBox.style.animation = 'intro-box 3s ease both';
+        introBox.addEventListener('animationend', () => {
+            sonic.intro();
+            [hud, buttons].forEach(element => {
+                show(element);
+            });
+            bgmSwitch.click();
         });
-        round();
     });
 }
 
@@ -49,21 +59,19 @@ const colision = (enemy) => {
 }
 
 const round = () => {
-    setInterval(() => {
-        let n = Math.floor(Math.random() * enemies.length);
-        let enemy = enemies[n].figure;
+    let n = Math.floor(Math.random() * enemies.length);
+    let enemy = enemies[n].figure;
+    setTimeout(() => {
         stage.appendChild(enemy);
         colision(enemy);
         enemy.addEventListener('animationend', () => {
             stage.removeChild(enemy)
         });
-    }, 5000);
+    }, 1000);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    bgmControll();
     init();
-
     jumpBtn.addEventListener('click', () => sonic.jump());
     slideBtn.addEventListener('click', () => sonic.slide());
 });

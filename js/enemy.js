@@ -7,9 +7,8 @@ class Enemy {
         this.#figure.right = `-${width}px`;
         this.#figure.style.transform = `translateY(${bottom}px)`;
         this.#figure.style.animationDuration = `${duration}ms`;
-        this.#figure.classList.add('enemy')
+        this.#figure.classList.add('enemy');
         this.#figure.points = points;
-        // t'
     }
 
     get figure() {

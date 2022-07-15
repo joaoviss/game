@@ -125,6 +125,33 @@
     align-self: flex-start;
     background-color: #800;
 }
+.title-screen {
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: 0.3s;
+}
+.intro-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a00;
+    font-size: 1.4em;
+    background-color: #ff0;
+}
+.logo {
+    width: 100%;
+}
+.blinking-text {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 10px;
+    animation: blink 1000ms linear infinite alternate;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000,
+                -1px -1px 2px #000;
+}
 @keyframes ground-move {
     from { background-position-x: right; }
     to { background-position-x: left; }
@@ -141,6 +168,7 @@
     from { bottom: 100%; }
     to { bottom: 0; }
 }
+
 @keyframes intro-animation-1 {
     from { left: -100px; }
     to { left: 0; }
@@ -152,6 +180,14 @@
 @keyframes enemy-move {
     from { left: 100%; }
     to { left: -115px; }
+}
+@keyframes blink {
+    from { opacity: 1; }
+    to { opacity: 0;}
+}
+@keyframes intro-box {
+    from { height: 100%; }
+    to { height: 0; }
 }
 @media screen and (min-device-width: 890px) {
     .buttons {

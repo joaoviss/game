@@ -9,17 +9,6 @@
     <script src="./js/enemy.js"></script>
     <link rel="shortcut icon" href="./img/run.gif" type="image/gif">
     <link rel="stylesheet" href="./css/style.css">
-    <style>
-        .start-screen {
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 20px;
-            align-items: center;
-            justify-content: center;
-        }
-        .logo {
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
     <audio src="./assets/bgm-green-hill.mp3" id="bgm-green-hill"></audio>
@@ -57,12 +46,13 @@
                 <button id="slide-btn" class="button">Slide</button>
             </span>
         </div>
-        <div id="start-screen" class="start-screen on">
+        <div id="intro-box" class="intro-box on">Preparado?</div>
+        <div id="title-screen" class="title-screen on">
             <img src="./img/main-screen.gif" class="logo">
+            <h1 class="blinking-text">Clique para começar!</h1>
         </div>
 
     </div>
-    <!-- <script type="module" src="./js/script.js"></script> -->
     <script src="./js/script.js"></script>
 </body>
 </html>
