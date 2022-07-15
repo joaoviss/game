@@ -20,12 +20,12 @@ class Sonic {
     }
 
     intro() {
-        this.#figure.src = '../img/sonic-walk.gif';
+        this.#figure.src = './img/sonic-walk.gif';
         this.#figure.classList.add('intro1');
         stage.appendChild(this.#figure);
         this.#figure.addEventListener('animationend', () => {
             this.#figure.classList.remove('intro1');
-            this.#figure.src = '../img/sonic-stand.gif';
+            this.#figure.src = ',/img/sonic-stand.gif';
             setTimeout(() => {
                 this.walk();
             }, 400);
@@ -34,7 +34,7 @@ class Sonic {
     
     walk() {
         this.#figure.removeAttribute('class');        
-        this.#figure.src = '../img/sonic-walk.gif'
+        this.#figure.src = './img/sonic-walk.gif'
         foreground.style.animationPlayState = 'running';
         this.controlls(true);
     }
@@ -43,7 +43,7 @@ class Sonic {
         this.controlls(false);
         sfxJump.volume = 0.1;
         sfxJump.play();
-        this.#figure.src = '../img/sonic-jump.gif'; 
+        this.#figure.src = './img/sonic-jump.gif'; 
         this.#figure.classList.add('jump');
         this.#figure.addEventListener('animationend', () => {
             this.walk();
@@ -54,7 +54,7 @@ class Sonic {
         this.controlls(false);
         sfxSlide.volume = 0.1;
         sfxSlide.play();
-        this.#figure.src = '../img/sonic-slide.gif';
+        this.#figure.src = './img/sonic-slide.gif';
         setTimeout(() => {
             this.walk();
         }, 1000);
@@ -64,7 +64,7 @@ class Sonic {
         this.controlls(false);
         sfxDeath.volume = 0.1;
         sfxDeath.play();
-        this.#figure.src = '../img/sonic-stop.gif'
+        this.#figure.src = './img/sonic-stop.gif'
         this.#figure.classList.add('death');
         this.#figure.addEventListener('animationend', () => {
             stage.removeChild(this.#figure);
