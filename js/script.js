@@ -15,12 +15,12 @@ const slideBtn = document.querySelector('#slide-btn');
 // */
 const sonic = new Sonic();
 const enemies = [
-    new Enemy('../img/sonic-enemy-lobster.gif', -65, 115, 10, 3000),
-    new Enemy('../img/sonic-enemy-dino.gif', 0, 78, 5, 3500),
-    new Enemy('../img/sonic-enemy-bat.gif', -65, 110, 10, 3500),
-    new Enemy('../img/sonic-enemy-crab.gif', 0, 112, 10, 2500),
-    new Enemy('../img/sonic-enemy-bee.gif', -65, 104, 10, 2300),
-    new Enemy('../img/sonic-enemy-motobug.gif', 0, 115, 10, 2500)
+    new Enemy('./img/sonic-enemy-lobster.gif', -65, 115, 10, 3000),
+    new Enemy('./img/sonic-enemy-dino.gif', 0, 78, 5, 3500),
+    new Enemy('./img/sonic-enemy-bat.gif', -65, 110, 10, 3500),
+    new Enemy('./img/sonic-enemy-crab.gif', 0, 112, 10, 2500),
+    new Enemy('./img/sonic-enemy-bee.gif', -65, 104, 10, 2300),
+    new Enemy('./img/sonic-enemy-motobug.gif', 0, 115, 10, 2500)
 ];
 
 const init = () => {
