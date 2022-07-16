@@ -1,10 +1,13 @@
 class Sonic {
-
+    
     #figure;
-
+    
     constructor() {
+        var canKill = false;
         this.#figure = new Image();
         this.#figure.style.position = 'absolute';
+        this.#figure.canKill = false;
+        this.#figure.lives = 3;
     }
 
     action(e) {
@@ -30,6 +33,7 @@ class Sonic {
     }
     
     walk() {
+        this.#figure.canKill = false;
         this.#figure.removeAttribute('class');        
         this.#figure.src = './img/sonic-walk.gif'
         foreground.style.animationPlayState = 'running';
@@ -37,6 +41,7 @@ class Sonic {
     }
 
     jump() {
+        this.#figure.canKill = true;
         this.controlls(false);
         sfxJump.volume = 0.1;
         sfxJump.play();
@@ -45,7 +50,7 @@ class Sonic {
         this.#figure.addEventListener('animationend', () => {
             this.walk();
         });
-    }
+    }   
     
     slide() {
         this.controlls(false);
@@ -57,20 +62,37 @@ class Sonic {
         }, 1000);
     }
 
-    death() {
+    death() {   
+        this.#figure.lives--;
         this.controlls(false);
         sfxDeath.volume = 0.1;
         sfxDeath.play();
         this.#figure.src = './img/sonic-stop.gif'
-        this.#figure.classList.add('death');
-        this.#figure.addEventListener('animationend', () => {
-            stage.removeChild(this.#figure);
-            foreground.classList.remove('ground-move')
-            foreground.style.animationPlayState = 'paused';
-        })
+        foreground.style.animationPlayState = 'paused';
+        setTimeout(() => {
+            this.walk()
+        }, 1000);
+        // this.#figure.classList.add('death');
+        // this.#figure.addEventListener('animationend', () => {
+        //     stage.removeChild(this.#figure);
+        //     foreground.classList.remove('ground-move')
+        //     foreground.style.animationPlayState = 'paused';
+        // })
     }
     
     get figure() {
         return this.#figure;
+    }
+
+    get canKill() {
+        return this.#figure.canKill;
+    }
+
+    get lives() {
+        return this.#figure.lives;
+    }
+
+    set canKill(canKill) {
+        this.#figure.canKill = canKill;
     }
 }
