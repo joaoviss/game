@@ -67,7 +67,7 @@
     animation: intro-animation-1 300ms ease;
 }
 .jump {
-    animation: jump-animation 750ms 2 alternate ease;
+    animation: jump-animation 600ms 2 alternate ease;
 }
 .death {
     animation: death-animation 1s ease-in-out both;

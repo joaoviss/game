@@ -1,38 +1,48 @@
 class Enemy {
     #figure;
+    #isTangible;
+    #img;
+    #points;
+
 
     constructor(img, bottom, width, points, duration) {
         this.#figure = new Image(width);
-        this.#figure.src = img;
+        this.#img = img;
         this.#figure.right = `-${width}px`;
         this.#figure.style.transform = `translateY(${bottom}px)`;
         this.#figure.style.animationDuration = `${duration}ms`;
         this.#figure.classList.add('enemy');
-        this.#figure.alt = points;
-        this.#figure.canKill = true;
-        // this.#figure.id = 'enemy';   
+        this.#points = points;
     }
 
+    walk() {
+        this.isTangible = true;
+        this.#figure.src = this.#img; 
+    }
+    
     death() {
-        this.#figure.canKill = false;
-        let normalSrc = this.#figure.src;
+        this.#isTangible = false;
         this.#figure.src = './img/explode.gif';
-        // this.#figure.style.animationPlayState = 'paused';
-        setTimeout(() => {
-            this.#figure.src = normalSrc;
-            // this.#figure.style.display = 'none';
-        }, 300);
+        this.#figure.addEventListener('animationend', () => {
+            setTimeout(() => {
+                this.walk();
+            }, 700);
+        });
+    }
+
+    get points() {
+        return this.#points;
     }
 
     get figure() {
         return this.#figure;
     }
 
-    get canKill() {
-        return this.#figure.canKill;
+    get isTangible() {
+        return this.#isTangible;
     }
 
-    set canKill(canKill) {
-        this.#figure.canKill = canKill;
+    set isTangible(value) {
+        this.#isTangible = value;
     }
 }

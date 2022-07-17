@@ -1,13 +1,15 @@
 class Sonic {
     
     #figure;
+    #isInvincible;
+    #isTangible;
+    #lives;
     
     constructor() {
-        var canKill = false;
         this.#figure = new Image();
+        this.#figure.style.left = '100px';
         this.#figure.style.position = 'absolute';
-        this.#figure.canKill = false;
-        this.#figure.lives = 3;
+        this.#lives = 3;
     }
 
     action(e) {
@@ -28,20 +30,21 @@ class Sonic {
             this.#figure.src = './img/sonic-stand.gif';
             setTimeout(() => {
                 this.walk();
-            }, 400);
+            }, 300);
         });
     }
     
     walk() {
-        this.#figure.canKill = false;
+        this.#isInvincible = false;  
+        this.#isTangible = true;
         this.#figure.removeAttribute('class');        
         this.#figure.src = './img/sonic-walk.gif'
         foreground.style.animationPlayState = 'running';
         this.controlls(true);
     }
-
+    
     jump() {
-        this.#figure.canKill = true;
+        this.#isInvincible = true;
         this.controlls(false);
         sfxJump.volume = 0.1;
         sfxJump.play();
@@ -61,38 +64,52 @@ class Sonic {
             this.walk();
         }, 1000);
     }
-
+    
     death() {   
-        this.#figure.lives--;
         this.controlls(false);
+        // this.#isTangible = false;
         sfxDeath.volume = 0.1;
         sfxDeath.play();
         this.#figure.src = './img/sonic-stop.gif'
         foreground.style.animationPlayState = 'paused';
         setTimeout(() => {
+            this.#lives--;
             this.walk()
-        }, 1000);
-        // this.#figure.classList.add('death');
-        // this.#figure.addEventListener('animationend', () => {
-        //     stage.removeChild(this.#figure);
-        //     foreground.classList.remove('ground-move')
-        //     foreground.style.animationPlayState = 'paused';
-        // })
+      
+        }, 300);
+    }
+
+    lastDeath() {
+        this.#figure.src = './img/sonic-stop.gif'
+        this.#figure.classList.add('death'); 
+        this.#figure.addEventListener('animationend', () => {
+            stage.removeChild(this.#figure);
+            foreground.classList.remove('ground-move')
+            foreground.style.animationPlayState = 'paused';
+        })
+    }
+    
+    get isInvincible() {
+        return this.#isInvincible;
+    }
+
+    set isInvincible(value) {
+        this.#isInvincible = value;
+    }
+ 
+    set isTangible(value) {
+        this.#isTangible = value;
+    }
+ 
+    get isTangible() {
+        return this.#isTangible;
     }
     
     get figure() {
         return this.#figure;
     }
 
-    get canKill() {
-        return this.#figure.canKill;
-    }
-
     get lives() {
-        return this.#figure.lives;
+        return this.#lives;
     }
-
-    set canKill(canKill) {
-        this.#figure.canKill = canKill;
-    }
-}
+}   

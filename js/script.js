@@ -1,4 +1,4 @@
-var lives = 3;
+var lives = 2;
 var rings = 0;
 //* 
 const bgmGreenHill = document.querySelector('#bgm-green-hill');
@@ -40,15 +40,19 @@ const init = () => {
     lifeCounter.textContent = sonic.lives;
     ringCounter.textContent = rings;
     introBox.addEventListener('animationend', () => {
-        sonic.intro();
         [hud, buttons].forEach(element => {
             show(element);
         });
-        // round();
         bgmSwitch.click();
-        setInterval(() => {
+        sonic.intro();
+        let game = setInterval(() => {
             round();
-        }, 2000);
+            if (sonic.lives <= 0) {
+                clearInterval(game);
+                sonic.lastDeath();
+                show(titleScreen);
+            }
+        }, 3100);
     });
 }
 
@@ -64,60 +68,44 @@ const bgmControll = () => {
 //*
 const colision = (enemy) => {
     setInterval(() => {
-            let s = sonic.figure.getBoundingClientRect();
-            let e = enemy.figure.getBoundingClientRect();
-            if ((s.x + s.width > e.x) && (s.x < e.x + e.width)
-            && (s.y < e.y + e.height) && (s.y + s.height > e.y)) {
-                if (sonic.canKill) {
-                    enemy.canKill = false;
-                    enemy.death();
-                    rings += parseInt(enemy.figure.alt);
-                    ringCounter.textContent = rings;
-                } else {
-                    if (enemy.canKill) {
-                        sonic.death();
-                        enemy.canKill = false;
-                        lifeCounter.textContent = sonic.lives;
-                        enemy.figure.src = './img/explode.gif';
-                        enemy.figure.style.animationPlayState = 'paused';
-                        setTimeout(() => {
-                            enemy.figure.style.animationPlayState = 'running';
-                            try {
-                                // enemy.figure.parentNode.removeChild(enemy.figure);
-                            } catch(error) {
-                                console.log(error);
-                            }
-                        }, 300);
-                    }
-                }
+        let s = sonic.figure.getBoundingClientRect();
+        let e = enemy.figure.getBoundingClientRect();
+        if ((s.x + s.width > e.x) && (s.x < e.x + e.width)
+        && (s.y < e.y + e.height) && (s.y + s.height > e.y)) {
+            if (sonic.isInvincible) {
+                enemy.death();
+                rings = rings + enemy.points;
+                ringCounter.textContent = rings;
+            } else {
+                if ((enemy.isTangible) && (sonic.isTangible)) {
+                    sonic.death();
+                    enemy.isTangible = false;
+                    lives = lives  - 1;
+                    lifeCounter.textContent = lives;
+                };
             }
+        }
     }, 100);
 }
-//  */
 
-/*
 const round = () => {
     let n = Math.floor(Math.random() * enemies.length);
     let enemy = enemies[n];
-    stage.appendChild(enemy.figure);
-}
-
-/*/
-const round = () => {
-    let n = Math.floor(Math.random() * enemies.length);
-    let enemy = enemies[n];
-    setTimeout(() => {
+    var turn = setTimeout(() => {
         stage.appendChild(enemy.figure);
+        enemy.walk();
         colision(enemy);
         enemy.figure.addEventListener('animationend', () => {
-            // enemy.figure.parentNode.removeChild(enemy.figure);
+            if (stage.contains(enemy.figure)) {
                 stage.removeChild(enemy.figure);
+                clearTimeout(turn);
+           } 
         });
-    }, 1000);
+    }, 2000);
 }
-//  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // init();
     titleScreen.addEventListener('click', init);
     jumpBtn.addEventListener('click', () => sonic.jump());
     slideBtn.addEventListener('click', () => sonic.slide());
