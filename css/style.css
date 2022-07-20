@@ -66,16 +66,6 @@
 .intro1 {
     animation: intro-animation-1 300ms ease;
 }
-.jump {
-    animation: jump-animation 600ms 2 alternate ease;
-}
-.death {
-    animation: death-animation 1s ease-in-out both;
-}
-.enemy {
-    position: absolute;
-    animation: enemy-move linear both;
-}
 .foreground {
     background: url('../img/ground.png') repeat-x;
     animation: ground-move 2s linear infinite;
@@ -88,7 +78,6 @@
 }
 .hud {
     grid-area: hud;
-    /* display: flex; */
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -101,7 +90,6 @@
 .buttons {
     padding: 45px;
     grid-area: buttons;
-    /* display: flex; */
     justify-content: space-between;
 }
 .button {
@@ -131,21 +119,17 @@
     justify-content: center;
     flex-direction: column;
     transition: 0.3s;
+    color: #fff;
+    font-size: 1.3em;
+    transition: 0.8s;
 }
-.intro-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #a00;
-    font-size: 1.4em;
-    background-color: #ff0;
-}
-.logo {
+.logo-img {
     width: 100%;
 }
-.blinking-text {
+.text-msg {
+    display: inline-block;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.2em;
     margin: 10px;
     animation: blink 1000ms linear infinite alternate;
     color: #fff;
@@ -157,25 +141,21 @@
     to { background-position-x: left; }
 }
 @keyframes jump-animation {
-    from { transform: translateY(0); }
-    to { transform: translateY(-200px); }
+    /* from { transform: translateY(0); }
+    to { transform: translateY(-200px); } */
+    50% { transform: translateY(-190px);}
 }
 @keyframes move {
     from { left: 100%; }
     to { left: -160px; }
 }
 @keyframes intro-animation {
-    from { bottom: 100%; }
-    to { bottom: 0; }
-}
-
-@keyframes intro-animation-1 {
     from { left: -100px; }
     to { left: 0; }
 }
 @keyframes death-animation {
- 35% {transform: translateY(-300px); }   
- 100% { transform: translateY(220px); }
+    35% {transform: translateY(-300px); }   
+    100% { transform: translateY(220px); }
 }
 @keyframes enemy-move {
     from { left: 100%; }
@@ -190,19 +170,11 @@
     to { height: 0; }
 }
 @media screen and (min-device-width: 890px) {
-    .buttons {
-        display: none;
-    }
-    .game {
-        max-width: 600px;
-    }
+    .buttons { display: none; }
+    .game { max-width: 600px; }
 }
 @media screen and (min-device-width: 891px)
 and (max-device-width: 1024px) {
-    .buttons {
-        display: flex;
-    }
-    .game {
-        max-width: 600px;
-    }
+    .buttons { display: flex; }
+    .game { max-width: 600px; }
 }

@@ -1,15 +1,17 @@
 class Sonic {
     
     #figure;
-    #isInvincible;
-    #isTangible;
+    #invincible;
+    #tangible;
     #lives;
     
-    constructor() {
+    constructor(lives) {
         this.#figure = new Image();
         this.#figure.style.left = '100px';
         this.#figure.style.position = 'absolute';
-        this.#lives = 3;
+        this.#tangible = true;
+        this.#invincible = false;
+        this.#lives = lives;
     }
 
     action(e) {
@@ -23,20 +25,19 @@ class Sonic {
 
     intro() {
         this.#figure.src = './img/sonic-walk.gif';
-        this.#figure.classList.add('intro1');
+        this.#figure.style.animation = 'intro-animation 400ms ease';
         stage.appendChild(this.#figure);
         this.#figure.addEventListener('animationend', () => {
-            this.#figure.classList.remove('intro1');
             this.#figure.src = './img/sonic-stand.gif';
             setTimeout(() => {
+                this.#figure.style.animation = 'none';
                 this.walk();
             }, 300);
         });
     }
     
     walk() {
-        this.#isInvincible = false;  
-        this.#isTangible = true;
+        this.#invincible = false;  
         this.#figure.removeAttribute('class');        
         this.#figure.src = './img/sonic-walk.gif'
         foreground.style.animationPlayState = 'running';
@@ -44,12 +45,12 @@ class Sonic {
     }
     
     jump() {
-        this.#isInvincible = true;
+        this.#invincible = true;
         this.controlls(false);
+        this.#figure.src = './img/sonic-jump.gif'; 
         sfxJump.volume = 0.1;
         sfxJump.play();
-        this.#figure.src = './img/sonic-jump.gif'; 
-        this.#figure.classList.add('jump');
+        this.#figure.style.animation = 'jump-animation 900ms alternate ease';
         this.#figure.addEventListener('animationend', () => {
             this.walk();
         });
@@ -66,43 +67,51 @@ class Sonic {
     }
     
     death() {   
-        this.controlls(false);
-        // this.#isTangible = false;
-        sfxDeath.volume = 0.1;
-        sfxDeath.play();
-        this.#figure.src = './img/sonic-stop.gif'
-        foreground.style.animationPlayState = 'paused';
-        setTimeout(() => {
-            this.#lives--;
-            this.walk()
-      
-        }, 300);
+        if (this.lives > 0) {
+            this.controlls(false);
+            this.setIntangible();
+            sfxDeath.volume = 0.1;
+            sfxDeath.play();
+            this.#figure.src = './img/sonic-stop.gif';
+            foreground.style.animationPlayState = 'paused';
+            this.lives--;
+            setTimeout(() => {
+                this.walk()
+            }, 300);
+        } else {
+            gameOver();
+            this.controlls(false);
+            this.lastDeath();
+        }
     }
 
     lastDeath() {
         this.#figure.src = './img/sonic-stop.gif'
-        this.#figure.classList.add('death'); 
+        this.#figure.style.animation = 'death-animation 1s ease-in-out';
         this.#figure.addEventListener('animationend', () => {
-            stage.removeChild(this.#figure);
-            foreground.classList.remove('ground-move')
-            foreground.style.animationPlayState = 'paused';
+            if (stage.contains(this.volume))
+                stage.removeChild(this.#figure);
+            foreground.style.animationPlayState = 'unset';
         })
     }
     
-    get isInvincible() {
-        return this.#isInvincible;
+    setIntangible() {
+        this.#tangible = false;
+        setTimeout(() => {
+            this.#tangible = true;
+        }, 1000);
+    }
+    
+    get invincible() {
+        return this.#invincible;
     }
 
-    set isInvincible(value) {
-        this.#isInvincible = value;
+    set invincible(value) {
+        this.#invincible = value;
     }
  
-    set isTangible(value) {
-        this.#isTangible = value;
-    }
- 
-    get isTangible() {
-        return this.#isTangible;
+    get tangible() {
+        return this.#tangible;
     }
     
     get figure() {
@@ -112,4 +121,8 @@ class Sonic {
     get lives() {
         return this.#lives;
     }
-}   
+    
+    set lives(lives) {
+        this.#lives = lives;
+    }
+}
