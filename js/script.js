@@ -1,11 +1,23 @@
-var play;
-var rings;
+
+
+
+
+
+
+
+
+
+
+
+
 const bgmGreenHill = document.querySelector('#bgm-green-hill');
 const sfxDeath = document.querySelector('#sfx-death');
 const sfxJump = document.querySelector('#sfx-jump');
 const sfxKill = document.querySelector('#sfx-kill');
 const sfxSlide = document.querySelector('#sfx-slide');
-const stage = document.querySelector('#stage');
+const sfxBreak = document.querySelector('#sfx-break');
+const sfxPlop = document.querySelector('#sfx-plop');
+const main = document.querySelector('#main');
 const foreground = document.querySelector('#foreground');
 const hud = document.querySelector('#hud');
 const introBox = document.querySelector('#intro-box');
@@ -19,18 +31,19 @@ const lifeCounter = document.querySelector('#life-counter');
 const ringCounter = document.querySelector('#ring-counter');
 const logoImg = document.querySelector('#logo-img');
 const textMsg = document.querySelector('#text-msg');
-const sonic = new Sonic(3);
+var bgm = bgmGreenHill;
+var sonic;
+var rings;
 const enemies = [
-    // new Enemy('./img/sonic-enemy-lobster.gif', -70, 115, 10, 3000),
+    new Enemy('./img/sonic-enemy-lobster.gif', -70, 115, 10, 3000),
     new Enemy('./img/sonic-enemy-dino.gif', 0, 78, 5, 3500),
-    // new Enemy('./img/sonic-enemy-bat.gif', -70, 110, 10, 3500),
+    new Enemy('./img/sonic-enemy-bat.gif', -70, 110, 10, 3500),
     new Enemy('./img/sonic-enemy-crab.gif', 0, 112, 10, 2500),
-    // new Enemy('./img/sonic-enemy-bee.gif', -70, 104, 10, 2300),
+    new Enemy('./img/sonic-enemy-bee.gif', -70, 104, 10, 2300),
     new Enemy('./img/sonic-enemy-motobug.gif', 0, 115, 10, 2500)
 ];
 
 const bgmControll = () => {
-    let bgm = bgmGreenHill;
     bgm.volume = 0.1;
     bgm.loop = true;
     bgmSwitch.addEventListener('change', () => {
@@ -44,14 +57,13 @@ const colision = (enemy) => {
         let e = enemy.figure.getBoundingClientRect();
         if ((s.x + s.width > e.x) && (s.x < e.x + e.width)
          && (s.y < e.y + e.height) && (s.y + s.height > e.y)) {
-             if ((sonic.tangible) && (enemy.tangible)) {
+             if (enemy.tangible) {
                  if (sonic.invincible) {
                      enemy.death();
-                     sonic.setIntangible();
                      ringCounter.textContent = rings += enemy.points;
                  } else {
                      sonic.death();
-                     sonic.setIntangible();
+                     enemy.tangible = false;
                      lifeCounter.textContent = sonic.lives;
                  }
             }
@@ -75,6 +87,7 @@ const gameStart = () => {
     titleScreen.addEventListener('keydown', gameplay);
 }
 const gameOver = () => {
+    bgm.pause();
     titleScreen.style.backgroundColor = '#f089';
     hud.style.display = 'none';
     buttons.style.display = 'none';
@@ -85,7 +98,7 @@ const gameOver = () => {
 
 const gameplay = () => {
     rings = 0;
-    sonic.lives = 3;
+    sonic = new Sonic(3);     
     lifeCounter.textContent = sonic.lives;
     ringCounter.textContent = rings
     logoImg.style.display = 'none';
@@ -104,5 +117,4 @@ document.addEventListener('DOMContentLoaded', () => {
     jumpBtn.addEventListener('click', () => sonic.jump());
     slideBtn.addEventListener('click', () => sonic.slide());
     gameStart();
-    // gameplay();
 });

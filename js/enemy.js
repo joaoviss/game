@@ -30,6 +30,8 @@ class Enemy {
     death() {
         this.#tangible = false;
         this.#figure.src = './img/explode.gif';
+        sfxPlop.volume = 0.1;
+        sfxPlop.play();
         this.#figure.addEventListener('animationend', () => {
             setTimeout(() => {
                 this.walk();

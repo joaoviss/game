@@ -2,15 +2,15 @@ class Sonic {
     
     #figure;
     #invincible;
-    #tangible;
+    #totalLives;
     #lives;
-    
+
     constructor(lives) {
         this.#figure = new Image();
         this.#figure.style.left = '100px';
         this.#figure.style.position = 'absolute';
-        this.#tangible = true;
         this.#invincible = false;
+        this.#totalLives = lives;
         this.#lives = lives;
     }
 
@@ -24,6 +24,8 @@ class Sonic {
     }
 
     intro() {
+        let stage = document.querySelector('#stage');
+        this.#lives = this.#totalLives;
         this.#figure.src = './img/sonic-walk.gif';
         this.#figure.style.animation = 'intro-animation 400ms ease';
         stage.appendChild(this.#figure);
@@ -38,7 +40,6 @@ class Sonic {
     
     walk() {
         this.#invincible = false;  
-        this.#figure.removeAttribute('class');        
         this.#figure.src = './img/sonic-walk.gif'
         foreground.style.animationPlayState = 'running';
         this.controlls(true);
@@ -67,11 +68,10 @@ class Sonic {
     }
     
     death() {   
-        if (this.lives > 0) {
-            this.controlls(false);
-            this.setIntangible();
-            sfxDeath.volume = 0.1;
-            sfxDeath.play();
+        this.controlls(false);
+        if (this.lives > 1) {
+            sfxBreak.volume = 0.1;
+            sfxBreak.play();
             this.#figure.src = './img/sonic-stop.gif';
             foreground.style.animationPlayState = 'paused';
             this.lives--;
@@ -79,41 +79,33 @@ class Sonic {
                 this.walk()
             }, 300);
         } else {
-            gameOver();
-            this.controlls(false);
             this.lastDeath();
         }
     }
-
-    lastDeath() {
-        this.#figure.src = './img/sonic-stop.gif'
-        this.#figure.style.animation = 'death-animation 1s ease-in-out';
-        this.#figure.addEventListener('animationend', () => {
-            if (stage.contains(this.volume))
-                stage.removeChild(this.#figure);
-            foreground.style.animationPlayState = 'unset';
-        })
-    }
     
-    setIntangible() {
-        this.#tangible = false;
-        setTimeout(() => {
-            this.#tangible = true;
-        }, 1000);
+    lastDeath() {
+        this.#figure.src = './img/sonic-stop.gif';
+        sfxDeath.volume = 0.1;
+        sfxDeath.play();
+        this.#figure.style.animation = 'death-animation 1s ease-in-out both';
+        this.#figure.addEventListener('animationend', () => {
+            // if (stage.contains(this.#figure))
+            //     stage.removeChild(this.#figure);
+            main.replaceChild(stage.cloneNode(), stage);
+            gameOver();
+            foreground.style.animationPlayState = 'unset';
+            // this.#figure.style.top = '100%';
+        });
     }
     
     get invincible() {
         return this.#invincible;
     }
 
-    set invincible(value) {
-        this.#invincible = value;
+    set invincible(invincible) {
+        this.#invincible = invincible;
     }
  
-    get tangible() {
-        return this.#tangible;
-    }
-    
     get figure() {
         return this.#figure;
     }
