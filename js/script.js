@@ -31,6 +31,7 @@ const lifeCounter = document.querySelector('#life-counter');
 const ringCounter = document.querySelector('#ring-counter');
 const logoImg = document.querySelector('#logo-img');
 const textMsg = document.querySelector('#text-msg');
+const grounds = document.querySelectorAll('.ground');
 var bgm = bgmGreenHill;
 var sonic;
 var rings;

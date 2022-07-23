@@ -9,6 +9,8 @@
     <script src="./js/enemy.js"></script>
     <link rel="shortcut icon" href="./img/run.gif" type="image/gif">
     <link rel="stylesheet" href="./css/style.css">
+    <style>
+    </style>
 </head>
 <body>
     <audio src="./assets/bgm-green-hill.mp3" id="bgm-green-hill"></audio>
@@ -18,12 +20,12 @@
     <audio src="./assets/sfx-jump.wav" id="sfx-jump"></audio>
     <audio src="./assets/sfx-kill.wav" id="sfx-kill"></audio>
     <audio src="./assets/sfx-slide.wav" id="sfx-slide"></audio>
-    <div id="game" class="game">
-        <div id="background" class="background">
+    <main id="game" class="game">
+        <div id="background" class="background ground">
             <div class="bg1">
                 <img src="./img/cloud.png" class="cloud cloud1">
                 <img src="./img/cloud.png" class="cloud cloud2">
-            <img src="./img/cloud.png" class="cloud cloud3">            
+                <img src="./img/cloud.png" class="cloud cloud3">            
             </div>
             <div class="bg2">
             </div>
@@ -31,7 +33,7 @@
         <div id="main" class="main">
             <div id="stage" class="stage"></div>
         </div>
-        <div id="foreground" class="foreground">
+        <div id="foreground" class="foreground ground">
             <div id="hud" class="hud off">
                 <input type="checkbox" id="bgm-switch" class="switch">
                 <span class="display">
@@ -52,8 +54,7 @@
                 <h1 class="text-msg" id="text-msg"></h1>
             </div>
         </div>
-
-    </div>
+    </main>
     <script src="./js/script.js"></script>
 </body>
 </html>

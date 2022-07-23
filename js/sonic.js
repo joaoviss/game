@@ -41,7 +41,7 @@ class Sonic {
     walk() {
         this.#invincible = false;  
         this.#figure.src = './img/sonic-walk.gif'
-        foreground.style.animationPlayState = 'running';
+        grounds.forEach(ground => ground.style.animationPlayState = 'running');	
         this.controlls(true);
     }
     
@@ -73,7 +73,8 @@ class Sonic {
             sfxBreak.volume = 0.1;
             sfxBreak.play();
             this.#figure.src = './img/sonic-stop.gif';
-            foreground.style.animationPlayState = 'paused';
+            grounds.foreground
+            grounds.forEach(ground => ground.style.animationPlayState = 'paused');
             this.lives--;
             setTimeout(() => {
                 this.walk()
@@ -89,13 +90,11 @@ class Sonic {
         sfxDeath.play();
         this.#figure.style.animation = 'death-animation 1s ease-in-out both';
         this.#figure.addEventListener('animationend', () => {
-            // if (stage.contains(this.#figure))
-            //     stage.removeChild(this.#figure);
             main.replaceChild(stage.cloneNode(), stage);
             gameOver();
-            foreground.style.animationPlayState = 'unset';
-            // this.#figure.style.top = '100%';
+            grounds.forEach(ground => ground.style.animationPlayState = 'paused');
         });
+
     }
     
     get invincible() {
